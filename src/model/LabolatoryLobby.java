@@ -1,20 +1,19 @@
 package model;
 
-import generics.Hashtable;
-import generics.IHashtable;
-import generics.IPriorityQueue;
-import generics.PriorityQueue;
+import generics.*;
 
 public class LabolatoryLobby {
     //----------------------------------------------- attributes
     private IHashtable<Integer, Patient> dataBase;
     private IPriorityQueue<Patient> hematologia;
     private IPriorityQueue<Patient> general;
+    private IStack<Patient> goBack;
     //----------------------------------------------- Constructor
     public LabolatoryLobby(){
         dataBase = new Hashtable<>();
         hematologia = new PriorityQueue<>();
         general = new PriorityQueue<>();
+        goBack = new Stack<>();
     }
     //----------------------------------------------- Methods
     /*
