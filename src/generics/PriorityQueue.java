@@ -1,5 +1,6 @@
 package generics;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,11 +36,9 @@ public class PriorityQueue<V> implements IPriorityQueue<V> {
     public void insert(int key, V value) {
         heapSize++;
         length++;
-        if(length< pQueue.length){
+        if(length < pQueue.length){
             pQueue[length] = new Node<>(Integer.MIN_VALUE, value);
         }else{
-            heapSize--;
-            length--;
             INode<Integer, V>[] thePQueue = (Node<Integer, V>[]) new Node<?, ?>[SIZE*5];
             for (int i = 0; i < pQueue.length; i++) {
                 thePQueue[i] = pQueue[i];
@@ -77,14 +76,14 @@ public class PriorityQueue<V> implements IPriorityQueue<V> {
         // generic biggest value and position
         INode<Integer, V> largest;
         int place;
-        if(left.getKey() > pQueue[post].getKey() && l<=heapSize){
+        if(l<=heapSize && left.getKey() > pQueue[post].getKey()){
             largest = left;
             place = l;
         }else{
             largest = pQueue[post];
             place = post;
         }
-        if(right.getKey() > pQueue[post].getKey() && r<=heapSize){
+        if(r<=heapSize && right.getKey() > pQueue[post].getKey()){
             largest = right;
             place = r;
         }
@@ -120,7 +119,6 @@ public class PriorityQueue<V> implements IPriorityQueue<V> {
 
     @Override
     public boolean increasekey(int post, int key) {
-
         if(key < pQueue[post].getKey()){
             return false;
         }
@@ -132,5 +130,31 @@ public class PriorityQueue<V> implements IPriorityQueue<V> {
             post = parent(post);
         }
         return true;
+    }
+
+    public String toString(){
+        heapSort();
+        String s = "Start";
+        for (int i = length; i >= 0; i--) {
+            s += pQueue[i].getValue().toString();
+        }
+        builtMaxHeap();
+        return s+"\nEnd\n";
+    }
+    @Override
+    public boolean delete(V value){
+        boolean delete = false;
+        for (int i = 0; i <= length; i++) {
+            if(pQueue[i].getValue().equals(value)){
+                delete = true;
+                for (int j = i; j <= length; j++) {
+                    pQueue[j] = pQueue[j+1];
+                }
+                heapSize--;
+                length--;
+                break;
+            }
+        }
+        return delete;
     }
 }

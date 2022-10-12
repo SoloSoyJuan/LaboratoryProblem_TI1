@@ -41,8 +41,28 @@ public class LabolatoryLobby {
         int ID = Integer.parseInt(id);
         Patient patient = dataBase.search(ID).getValue();
         switch (queue) {
-            case 1 -> hematologia.insert(patient.priorityLevel(), patient); // en caso de ingresar a hematología
-            case 2 -> general.insert(patient.priorityLevel(), patient); // en caso de ingresar a propósito general
+            case 1: hematologia.insert(patient.priorityLevel(), patient); break;// en caso de ingresar a hematología
+            case 2: general.insert(patient.priorityLevel(), patient); break; // en caso de ingresar a propósito general
         }
+    }
+    /*
+        metodo para mostrar los pacientes que se encuentrar en una de las filas
+     */
+    public String printQueue(int queue){
+        String info = "";
+        switch (queue){
+            case 1: info = hematologia.toString(); break;
+            case 2: info = general.toString(); break;
+        }
+        return info;
+    }
+    public String deletefromQueue(int queue, String id){
+        String s = "";
+        Patient patient = dataBase.search(Integer.parseInt(id)).getValue();
+        switch (queue){
+            case 1: s = (hematologia.delete(patient)) ? "Eliminado\n": "No esta en la fila\n"; break;
+            case 2: s = (hematologia.delete(patient)) ? "Eliminado\n": "No esta en la fila\n"; break;
+        }
+        return s;
     }
 }

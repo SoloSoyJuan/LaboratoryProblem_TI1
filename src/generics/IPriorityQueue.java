@@ -11,4 +11,5 @@ public interface IPriorityQueue<V> {
     public void builtMaxHeap();
     public void heapSort();
     public boolean increasekey(int post, int key);
+    public boolean delete(V value);
 }
