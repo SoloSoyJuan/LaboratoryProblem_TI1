@@ -7,8 +7,8 @@ public class Stack<V> implements IStack<V> {
     }
 
     @Override
-    public void push(int key, V element) {
-        INode<Integer, V> node = new Node<>(key, element);
+    public void push(boolean entry, int key, V element) {
+        INode<Integer, V> node = new NodeThreeValue<>(entry, key, element);
         if(top == null){
             top = node;
         }else{
@@ -18,10 +18,10 @@ public class Stack<V> implements IStack<V> {
     }
 
     @Override
-    public V pop() {
+    public INode<Integer, V> pop() {
         INode<Integer, V> node = top.getNext();
-        V element = top.getValue();
         top.setNext(null);
+        INode<Integer, V> element = top;
         top = node;
         return element;
     }
